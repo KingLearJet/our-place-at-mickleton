@@ -1,0 +1,9 @@
+{
+  "name": "Our Place at Mickleton",
+  "short_name": "Mickleton",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f2e9",
+  "theme_color": "#3d5648",
+  "description": "Our little family escape in Teesdale."
+}
