@@ -52,11 +52,16 @@
   }
   function saveLocal(items) { localStorage.setItem(key, JSON.stringify(items)); }
   function usingSupabase() { return Boolean(cfg.supabaseUrl && cfg.supabaseAnonKey); }
+  function apiHeaders(extra = {}) {
+    const headers = { apikey: cfg.supabaseAnonKey, ...extra };
+    if (String(cfg.supabaseAnonKey).startsWith('eyJ')) headers.Authorization = `Bearer ${cfg.supabaseAnonKey}`;
+    return headers;
+  }
 
   async function loadReviews() {
     if (!usingSupabase()) return localReviews();
     const endpoint = `${cfg.supabaseUrl}/rest/v1/${cfg.tableName || 'reviews'}?select=*&order=created_at.desc`;
-    const res = await fetch(endpoint, { headers: { apikey: cfg.supabaseAnonKey, Authorization: `Bearer ${cfg.supabaseAnonKey}` } });
+    const res = await fetch(endpoint, { headers: apiHeaders() });
     if (!res.ok) throw new Error('Could not load reviews');
     return res.json();
   }
@@ -71,7 +76,7 @@
     const endpoint = `${cfg.supabaseUrl}/rest/v1/${cfg.tableName || 'reviews'}`;
     const res = await fetch(endpoint, {
       method:'POST',
-      headers:{ apikey:cfg.supabaseAnonKey, Authorization:`Bearer ${cfg.supabaseAnonKey}`, 'Content-Type':'application/json', Prefer:'return=minimal' },
+      headers:apiHeaders({ 'Content-Type':'application/json', Prefer:'return=minimal' }),
       body:JSON.stringify(review)
     });
     if (!res.ok) throw new Error('Could not save review');
