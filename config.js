@@ -1,8 +1,7 @@
-// Optional shared-review setup.
-// Leave these blank for local preview mode (reviews are saved only in this browser).
-// To make reviews shared between family members, add a Supabase project URL and anon key here.
+// Shared family guestbook configuration.
+// This publishable key is safe to use in a browser; database access is controlled by Supabase RLS policies.
 window.MICKLETON_CONFIG = {
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://fdviwoshsgsckrzsswin.supabase.co",
+  supabaseAnonKey: "sb_publishable_LDyUjIQb2kFGyT9k0fdVZA_Cn_RgWQY",
   tableName: "reviews"
 };
